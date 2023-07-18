@@ -245,18 +245,23 @@ console.log("factorial(10)", factorial(10)); // Виведе: 3628800
 function makeAdder(x) {
   // Вертаємо нову функцію, яка приймає `y`
   // Сумуємо `x` та `y` і повертаємо результат
+  return function (y) {
+    return x + y;
+  };
 }
 
 // Створюємо змінну getAdder якій присвоємо результат виконання функції makeAdder з аргументом 5
+const getAdder = makeAdder(5);
 
 console.log("Завдання 12 ====================================");
 // Розкоментуйте після виконаня завдання
-// console.log("getAdder(10)", getAdder(10)); // Виведе: 15
-// console.log("makeAdder(5)(10)", makeAdder(5)(10)); // Виведе: 15
+console.log("getAdder(10)", getAdder(10)); // Виведе: 15
+console.log("makeAdder(5)(10)", makeAdder(5)(10)); // Виведе: 15
 
 // Задача 13: Задача: створити стрілкову функцію, яка приймає два числа і повертає їх добуток.
 let multiply = (x, y) => {
   // Повертаємо добуток x та y
+  return x * y;
 };
 
 console.log("Завдання 13 ====================================");
@@ -267,14 +272,19 @@ console.log("multiply(5, 3)", multiply(5, 3)); // Виведе: 15
 function divide(x) {
   // Повертаємо нову функцію, яка приймає `y`
   // Ділимо `x` на `y` і повертаємо результат
+  return function (y) {
+    let result = x / y;
+    return result;
+  };
 }
 
 // Створюємо змінну getDivider якій присвоємо результат виконання функції divide з аргументом 2
+const getDivider = divide(2);
 
 console.log("Завдання 14 ====================================");
 // Розкоментуйте після виконаня завдання
-// console.log("getDivider(10)", getDivider(10)); // Виведе: 0.2
-// console.log("divide(2)(10)", divide(2)(10)); // Виведе: 0.2
+console.log("getDivider(10)", getDivider(10)); // Виведе: 0.2
+console.log("divide(2)(10)", divide(2)(10)); // Виведе: 0.2
 
 // Задача 15: Створити мемоізовану версію функції, яка обчислює площу квадрата на основі довжини його сторони.
 
@@ -290,20 +300,34 @@ function memoizedArea() {
   // prevSide присвоюємо сторону квадрата
   // prevResult просвоюємо площу квадрата
   // Повертаємо площу
+
+  return function (side) {
+    let prevSide = side;
+    let prevResult = side * side;
+    if (prevSide === side) {
+      console.log("Fetching from cache");
+      return prevResult;
+    } else if (prevSide !== side) {
+      prevResult = side * side;
+      console.log("Calculating result", prevResult);
+    }
+  };
 }
 
 //Створюємо змінну squareArea якій присвоємо результат виконання функції memoizedArea
+const squareArea = memoizedArea;
 
 console.log("Завдання 15 ====================================");
 // Розкоментуйте після виконаня завдання
-// console.log("squareArea(5)", squareArea(5)); // Обчислює і виводить 25
-// console.log("squareArea(5)", squareArea(5)); // Виводить "Fetching from cache" і виводить 25 з кешу
-// console.log("squareArea(6)", squareArea(6)); // Обчислює і виводить 36
-// console.log("squareArea(6)", squareArea(6)); // Виводить "Fetching from cache" і виводить 36 з кешу
+console.log("squareArea(5)", squareArea(5)); // Обчислює і виводить 25
+console.log("squareArea(5)", squareArea(5)); // Виводить "Fetching from cache" і виводить 25 з кешу
+console.log("squareArea(6)", squareArea(6)); // Обчислює і виводить 36
+console.log("squareArea(6)", squareArea(6)); // Виводить "Fetching from cache" і виводить 36 з кешу
 
 // Задача 16: Задача: створити функціональний вираз для обчислення кубу числа.
 let cube = function (n) {
   // Повертаємо n в кубі
+  return n ** 3;
 };
 
 console.log("Завдання 16 ====================================");
@@ -312,18 +336,24 @@ console.log("cube(3)", cube(3)); // Виведе: 27
 // Задача 17: створити дві функції, одна з яких збільшує число на 1, а інша - множить число на 2, а потім створити композицію цих функцій.
 function increment(n) {
   // Повертаємо n + 1
+  return n + 1;
 }
 
 function double(n) {
   // Повертаємо n*2
+  return n * 2;
 }
 
 function compose(func1, func2) {
   // Повертаємо нову функцію, яка приймає аргумент n
   // Повертаємо func2, в яку передаємо func1 з аргументом n
+  return function (n) {
+    return func2(func1(n));
+  };
 }
 
 // Створюємо змінну createCompose якій присвоємо результат виконання функції compose з аргументами increment та double
+const createCompose = compose(increment, double);
 console.log("Завдання 17 ====================================");
 // Розкоментуйте після виконаня завдання
-// console.log("createCompose(5)", createCompose(5)); // Виведе: 12 (5+1=6, 6*2=12)
+console.log("createCompose(5)", createCompose(5)); // Виведе: 12 (5+1=6, 6*2=12)
